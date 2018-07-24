@@ -1,19 +1,19 @@
-/* eslint-disable import/no-named-as-default */
-import { NavLink, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import React from "react";
 import { hot } from "react-hot-loader";
+
 import PageWrapper from "./PageWrapper";
-import NavBar from "./NavBar";
+import Navigation from "./Navigation";
 import AboutPage from "./AboutPage";
 import HomePage from "./HomePage";
 import NotFoundPage from "./NotFoundPage";
 
+import { Route, Switch } from "react-router-dom";
 class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <Navigation />
         <PageWrapper>
           <Switch>
             <Route exact path="/" component={HomePage} />
