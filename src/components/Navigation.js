@@ -46,7 +46,7 @@ class Navigation extends React.Component {
     this.props.testActions.testAction();
     auth.onAuthStateChanged(user => {
       if (user) {
-        // this.props.userActions.userLogin(user);
+        this.props.userActions.userLogin(user);
       }
     });
   }
@@ -57,8 +57,10 @@ class Navigation extends React.Component {
     };
     return (
       <div>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">CS</NavbarBrand>
+        <Navbar id="top-nav" color="light" light expand="md">
+          <NavLink to="/" className="navbar-brand">
+            <img className="img-fluid" src="../assets/code_logo.jpg" />
+          </NavLink>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -83,13 +85,13 @@ class Navigation extends React.Component {
               </NavItem>
               <NavItem>
                 {this.props.user ? (
-                  <p className="nav-link" onClick={this.logout}>
+                  <a className="nav-link" onClick={this.logout}>
                     | {this.props.user.displayName}
-                  </p>
+                  </a>
                 ) : (
-                  <p className="nav-link" onClick={this.login}>
+                  <a className="nav-link" onClick={this.login}>
                     Login
-                  </p>
+                  </a>
                 )}
               </NavItem>
             </Nav>
