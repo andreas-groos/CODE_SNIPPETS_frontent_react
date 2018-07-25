@@ -4,10 +4,8 @@ import PropTypes from "prop-types";
 
 const PageWrapper = props => {
   return (
-    <Container>
-      <Row className="my-3">
-        <Col>{props.children}</Col>
-      </Row>
+    <Container fluid id="page-wrapper">
+      <Row>{props.children}</Row>
     </Container>
   );
 };

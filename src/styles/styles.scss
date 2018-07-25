@@ -2,3 +2,8 @@
 @import './_variables';
 @import './bs4/bootstrap';
 @import './_navigation';
+@import './_sidebar';
+
+html, body {
+  height: 100vh;
+}

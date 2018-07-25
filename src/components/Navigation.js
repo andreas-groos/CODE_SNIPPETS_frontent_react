@@ -1,21 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem
-  // NavLink,
-} from "reactstrap";
-import { NavLink, Route, Switch } from "react-router-dom";
-import firebase, { auth, provider } from "../constants/firebase";
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from "reactstrap";
+import { NavLink } from "react-router-dom";
+import { auth, provider } from "../constants/firebase";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../actions/userActions";
-import * as testActions from "../actions/testActions";
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -37,13 +28,9 @@ class Navigation extends React.Component {
     });
   };
   login = () => {
-    auth.signInWithPopup(provider).then(result => {
-      // const user = result.user;
-      // this.props.userActions.userLogin(user);
-    });
+    auth.signInWithPopup(provider).then(result => {});
   };
   componentDidMount() {
-    this.props.testActions.testAction();
     auth.onAuthStateChanged(user => {
       if (user) {
         this.props.userActions.userLogin(user);
@@ -104,21 +91,17 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = {
   user: PropTypes.object,
-  test: PropTypes.object,
-  userActions: PropTypes.object,
-  testActions: PropTypes.object
+  userActions: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
-    test: state.test
+    user: state.user
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    testActions: bindActionCreators(testActions, dispatch),
     userActions: bindActionCreators(userActions, dispatch)
   };
 }
