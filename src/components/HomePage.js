@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
 import Sidebar from "./Sidebar";
+import ApolloTest from "./ApolloTest";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -10,6 +12,7 @@ class HomePage extends Component {
   render() {
     return (
       <React.Fragment>
+        <ApolloTest />
         <Sidebar />
       </React.Fragment>
     );
