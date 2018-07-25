@@ -2,11 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
-import { auth, provider } from "../constants/firebase";
+import firebase, { auth, provider } from "../constants/firebase";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../actions/userActions";
+
+import client, { HELLO, GET_USER_INFO, SAVE_USER } from "../constants/apollo";
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -33,10 +35,31 @@ class Navigation extends React.Component {
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {
+        console.log("user", user);
         this.props.userActions.userLogin(user);
+        firebase
+          .auth()
+          .currentUser.getIdToken()
+          .then(token => {
+            client
+              .query({
+                query: GET_USER_INFO,
+                variables: {
+                  token
+                }
+              })
+              .then(res => {
+                console.log("res.data", res.data);
+                // TODO: update store
+              })
+              .catch(err => {
+                console.log("err", err);
+              });
+          });
       }
     });
   }
+
   render() {
     const activeStyle = {
       color: "teal",
@@ -47,8 +70,8 @@ class Navigation extends React.Component {
         <Navbar id="top-nav" color="light" light expand="md">
           <NavLink to="/" className="navbar-brand">
             <img className="img-fluid" src="../assets/code_logo.jpg" />
-          </NavLink>
-          <NavbarToggler onClick={this.toggle} />
+          </NavLink>{" "}
+          <NavbarToggler onClick={this.toggle} />{" "}
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
@@ -58,32 +81,34 @@ class Navigation extends React.Component {
                   to="/"
                   activeStyle={activeStyle}
                 >
-                  Home
-                </NavLink>
-              </NavItem>
+                  Home{" "}
+                </NavLink>{" "}
+              </NavItem>{" "}
               <NavItem>
                 <NavLink
                   className="nav-link"
                   to="/about"
                   activeStyle={activeStyle}
                 >
-                  About
-                </NavLink>
-              </NavItem>
+                  About{" "}
+                </NavLink>{" "}
+              </NavItem>{" "}
               <NavItem>
+                {" "}
                 {this.props.user ? (
                   <a className="nav-link" onClick={this.logout}>
-                    | {this.props.user.displayName}
+                    |
+                    {this.props.user.displayName}{" "}
                   </a>
                 ) : (
                   <a className="nav-link" onClick={this.login}>
-                    Login
+                    Login{" "}
                   </a>
-                )}
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
+                )}{" "}
+              </NavItem>{" "}
+            </Nav>{" "}
+          </Collapse>{" "}
+        </Navbar>{" "}
       </div>
     );
   }

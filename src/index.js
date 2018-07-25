@@ -8,12 +8,8 @@ import "./styles/styles.scss"; // Yep, that's right. You can import SASS/CSS fil
 require("./favicon.ico"); // Tell webpack to load favicon.ico
 const store = configureStore();
 
-import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-
-const client = new ApolloClient({
-  uri: "http://localhost:3010/graphql"
-});
+import client from "./constants/apollo";
 
 render(
   <AppContainer>
