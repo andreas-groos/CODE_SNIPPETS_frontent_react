@@ -38,11 +38,14 @@
     "react": "16.4.0",
     "react-apollo": "2.1.9",
     "react-dom": "16.4.0",
+    "react-hotkeys": "1.1.4",
     "react-redux": "5.0.5",
     "react-router-dom": "4.2.2",
     "react-router-redux": "5.0.0-alpha.6",
+    "react-syntax-highlighter": "8.0.1",
     "reactstrap": "6.3.0",
     "redux": "3.6.0",
+    "redux-form": "7.4.2",
     "redux-thunk": "2.1.0"
   },
   "devDependencies": {

@@ -2,16 +2,32 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import Sidebar from "./Sidebar";
+import SnippetSection from "./SnippetSection";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../actions/userActions";
 
 class HomePage extends Component {
+  componentDidMount() {
+    window.addEventListener("keydown", this.globalKeyListener);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.globalKeyListener);
+  }
+
+  globalKeyListener = e => {
+    if (e.key === "n") {
+      console.log(e);
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
         <Sidebar />
+        <SnippetSection />
       </React.Fragment>
     );
   }

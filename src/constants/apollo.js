@@ -22,6 +22,14 @@ export const GET_USER_INFO = gql`
   }
 `;
 
+export const SAVE_SNIPPET = gql`
+  mutation saveSnippet($token: String!, $snippet: Snippet) {
+    saveSnippet(token: $token, snippet: $snippet) {
+      title
+    }
+  }
+`;
+
 // export const SAVE_USER = gql`
 //   mutation saveUser($token: String!) {
 //     saveUser(token: $token) {
