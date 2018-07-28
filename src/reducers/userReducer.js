@@ -11,8 +11,10 @@ export default function userReducer(state = initialState.user, action) {
       let { displayName, uid } = action.user;
       return { ...state, displayName, uid };
     case USER_LOGOUT:
+      localStorage.removeItem("token");
       return null;
     case SET_USER_TOKEN:
+      localStorage.setItem("token", action.token);
       return { ...state, token: action.token };
     default:
       return state;
