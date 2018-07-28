@@ -21,16 +21,20 @@ class HomePage extends Component {
     return (
       <React.Fragment>
         {/* skip={!token}: only fetch when token is present */}
-        <Query query={GET_USER_INFO} variables={{ token }} skip={!token}>
+        <Query query={GET_USER_INFO} skip={!token}>
           {({ loading, error, data }) => {
+            console.log("data", data);
             if (!data && loading) {
               // Shows only on first time while there is no 'data'
               return <h1>Loading</h1>;
             }
             return (
               <React.Fragment>
-                <Sidebar user={data} />
-                <SnippetSection user={data} />
+                <Sidebar user={data.getUserInfo} />
+                <SnippetSection
+                  user={data.getUserInfo}
+                  form={this.props.form}
+                />
               </React.Fragment>
             );
           }}
@@ -42,12 +46,14 @@ class HomePage extends Component {
 
 HomePage.propTypes = {
   user: PropTypes.object,
+  form: PropTypes.object,
   userActions: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    form: state.form
   };
 }
 
