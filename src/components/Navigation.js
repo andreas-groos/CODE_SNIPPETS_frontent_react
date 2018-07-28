@@ -8,8 +8,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../actions/userActions";
 
-import client, { HELLO, GET_USER_INFO, SAVE_USER } from "../constants/apollo";
-
 class Navigation extends React.Component {
   constructor(props) {
     super(props);
@@ -35,26 +33,12 @@ class Navigation extends React.Component {
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {
-        console.log("user", user);
         this.props.userActions.userLogin(user);
         firebase
           .auth()
           .currentUser.getIdToken()
           .then(token => {
-            client
-              .query({
-                query: GET_USER_INFO,
-                variables: {
-                  token
-                }
-              })
-              .then(res => {
-                console.log("res.data", res.data);
-                // TODO: update store
-              })
-              .catch(err => {
-                console.log("err", err);
-              });
+            this.props.userActions.setUserToken(token);
           });
       }
     });

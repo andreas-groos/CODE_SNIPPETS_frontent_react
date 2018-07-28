@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
+import { GET_USER_INFO } from "../constants/apollo";
+
 import Sidebar from "./Sidebar";
 import SnippetSection from "./SnippetSection";
 
@@ -9,25 +13,28 @@ import { bindActionCreators } from "redux";
 import * as userActions from "../actions/userActions";
 
 class HomePage extends Component {
-  componentDidMount() {
-    window.addEventListener("keydown", this.globalKeyListener);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("keydown", this.globalKeyListener);
-  }
-
-  globalKeyListener = e => {
-    if (e.key === "n") {
-      console.log(e);
-    }
-  };
-
   render() {
+    let token = null;
+    if (this.props.user && this.props.user.token) {
+      token = this.props.user.token;
+    }
     return (
       <React.Fragment>
-        <Sidebar />
-        <SnippetSection />
+        {/* skip={!token}: only fetch when token is present */}
+        <Query query={GET_USER_INFO} variables={{ token }} skip={!token}>
+          {({ loading, error, data }) => {
+            if (!data && loading) {
+              // Shows only on first time while there is no 'data'
+              return <h1>Loading</h1>;
+            }
+            return (
+              <React.Fragment>
+                <Sidebar user={data} />
+                <SnippetSection user={data} />
+              </React.Fragment>
+            );
+          }}
+        </Query>
       </React.Fragment>
     );
   }

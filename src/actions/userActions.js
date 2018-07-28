@@ -12,3 +12,10 @@ export function userLogout() {
     type: types.USER_LOGOUT
   };
 }
+
+export function setUserToken(token) {
+  return {
+    type: types.SET_USER_TOKEN,
+    token
+  };
+}

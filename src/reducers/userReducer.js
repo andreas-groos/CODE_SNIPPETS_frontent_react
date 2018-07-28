@@ -1,4 +1,8 @@
-import { USER_LOGIN, USER_LOGOUT } from "../constants/actionTypes.js";
+import {
+  USER_LOGIN,
+  USER_LOGOUT,
+  SET_USER_TOKEN
+} from "../constants/actionTypes.js";
 import initialState from "./initialState.js";
 
 export default function userReducer(state = initialState.user, action) {
@@ -8,6 +12,8 @@ export default function userReducer(state = initialState.user, action) {
       return { ...state, displayName, uid };
     case USER_LOGOUT:
       return null;
+    case SET_USER_TOKEN:
+      return { ...state, token: action.token };
     default:
       return state;
   }
