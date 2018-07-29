@@ -1,8 +1,14 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 
+import { Row, Col } from "reactstrap";
+
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { docco } from "react-syntax-highlighter/styles/hljs";
+
 const SnippetForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
+  let codeStr = props.code || "";
   return (
     <form onSubmit={handleSubmit}>
       <div className="my-2">
@@ -48,12 +54,24 @@ const SnippetForm = props => {
           </Field>
         </div>
       </div>
-      <div>
-        <label>Snippet</label>
-        <div>
-          <Field className="form-control" name="code" component="textarea" />
-        </div>
-      </div>
+      <label>Snippet</label>
+      <Row>
+        <Col>
+          <div>
+            <Field
+              className="form-control"
+              name="code"
+              component="textarea"
+              rows="10"
+            />
+          </div>
+        </Col>
+        <Col>
+          {codeStr.length > 0 && (
+            <SyntaxHighlighter style={docco}>{codeStr}</SyntaxHighlighter>
+          )}
+        </Col>
+      </Row>
       <div>
         <label>Notes</label>
         <div>

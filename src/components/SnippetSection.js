@@ -6,9 +6,6 @@ import { GET_USER_INFO, SAVE_SNIPPET } from "../constants/apollo";
 import { Col } from "reactstrap";
 import SnippetForm from "./SnippetForm";
 
-// import gql from "graphql-tag";
-// import client, { SAVE_SNIPPET } from "../constants/apollo";
-
 class SnippetSection extends Component {
   handleSubmit = (e, s) => {
     e.preventDefault();
@@ -45,9 +42,14 @@ class SnippetSection extends Component {
       });
   };
   render() {
+    let code =
+      (this.props.form.snippet &&
+        this.props.form.snippet.values &&
+        this.props.form.snippet.values.code) ||
+      null;
     return (
       <Col className=" py-3 sidebar sidebar-sticky">
-        <SnippetForm handleSubmit={this.handleSubmit} />
+        <SnippetForm handleSubmit={this.handleSubmit} code={code} />
       </Col>
     );
   }

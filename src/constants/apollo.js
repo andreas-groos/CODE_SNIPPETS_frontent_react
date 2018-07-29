@@ -70,6 +70,7 @@ export const SAVE_SNIPPET = gql`
       code
       notes
       _id
+      language
     }
   }
 `;
