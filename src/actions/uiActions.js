@@ -6,3 +6,16 @@ export function showEditor(show) {
     show
   };
 }
+
+export function setError(err) {
+  return {
+    type: types.SET_ERROR,
+    err
+  };
+}
+
+export function clearError() {
+  return {
+    type: types.CLEAR_ERROR
+  };
+}

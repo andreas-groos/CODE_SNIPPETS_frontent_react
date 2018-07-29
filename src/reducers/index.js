@@ -5,6 +5,8 @@ import { routerReducer } from "react-router-redux";
 import userReducer from "./userReducer";
 import testReducer from "./testReducer";
 import snippetReducer from "./snippetReducer";
+import uiReducer from "./uiReducer";
+
 import { reducer as formReducer } from "redux-form";
 
 export default combineReducers({
@@ -12,5 +14,6 @@ export default combineReducers({
   routing: routerReducer,
   test: testReducer,
   form: formReducer,
-  snippet: snippetReducer
+  snippet: snippetReducer,
+  ui: uiReducer
 });

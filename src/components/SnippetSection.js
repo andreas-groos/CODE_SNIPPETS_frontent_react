@@ -7,9 +7,8 @@ import { Col } from "reactstrap";
 import SnippetForm from "./SnippetForm";
 
 class SnippetSection extends Component {
-  handleSubmit = (e, s) => {
+  handleSubmit = e => {
     e.preventDefault();
-    console.log("e", e);
     let {
       snippetName,
       tags,
@@ -18,6 +17,11 @@ class SnippetSection extends Component {
       code,
       notes
     } = this.props.form.snippet.values;
+    if (!snippetName) {
+      this.props.uiActions.setError("no snippet name specified");
+      return;
+    }
+    this.props.uiActions.clearError();
     this.props.client
       .mutate({
         mutation: SAVE_SNIPPET,
@@ -38,7 +42,7 @@ class SnippetSection extends Component {
         });
       })
       .catch(err => {
-        console.log("err", err);
+        this.props.uiActions.setError("Error in submitting snippet");
       });
   };
   render() {
@@ -49,7 +53,18 @@ class SnippetSection extends Component {
       null;
     return (
       <Col className=" py-3 sidebar sidebar-sticky">
-        <SnippetForm handleSubmit={this.handleSubmit} code={code} />
+        {this.props.ui.error ? (
+          <p className="error-warning">{this.props.ui.error}</p>
+        ) : null}
+        <SnippetForm
+          handleSubmit={this.handleSubmit}
+          code={code}
+          values={
+            this.props.form &&
+            this.props.form.snippet &&
+            this.props.form.snippet.values
+          }
+        />
       </Col>
     );
   }
@@ -57,7 +72,9 @@ class SnippetSection extends Component {
 
 SnippetSection.propTypes = {
   form: PropTypes.object,
-  client: PropTypes.object
+  client: PropTypes.object,
+  ui: PropTypes.object,
+  uiActions: PropTypes.object
 };
 
 export default withApollo(SnippetSection);

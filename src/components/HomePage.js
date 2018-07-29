@@ -11,6 +11,7 @@ import SnippetSection from "./SnippetSection";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../actions/userActions";
+import * as uiActions from "../actions/uiActions";
 
 class HomePage extends Component {
   render() {
@@ -34,6 +35,8 @@ class HomePage extends Component {
                 <SnippetSection
                   user={data.getUserInfo}
                   form={this.props.form}
+                  ui={this.props.ui}
+                  uiActions={this.props.uiActions}
                 />
               </React.Fragment>
             );
@@ -47,19 +50,23 @@ class HomePage extends Component {
 HomePage.propTypes = {
   user: PropTypes.object,
   form: PropTypes.object,
-  userActions: PropTypes.object
+  ui: PropTypes.object,
+  userActions: PropTypes.object,
+  uiActions: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
     user: state.user,
-    form: state.form
+    form: state.form,
+    ui: state.ui
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    userActions: bindActionCreators(userActions, dispatch)
+    userActions: bindActionCreators(userActions, dispatch),
+    uiActions: bindActionCreators(uiActions, dispatch)
   };
 }
 
