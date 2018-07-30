@@ -19,3 +19,15 @@ export function clearError() {
     type: types.CLEAR_ERROR
   };
 }
+
+export function selectAll() {
+  return {
+    type: types.SELECT_ALL
+  };
+}
+
+export function selectStarred() {
+  return {
+    type: types.SELECT_STARRED
+  };
+}

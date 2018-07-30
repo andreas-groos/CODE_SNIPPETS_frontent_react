@@ -4,6 +4,7 @@ export default {
     time: 0
   },
   ui: {
-    error: null
+    error: null,
+    selection: "ALL"
   }
 };
