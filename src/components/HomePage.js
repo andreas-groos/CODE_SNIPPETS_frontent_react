@@ -31,7 +31,11 @@ class HomePage extends Component {
             }
             return (
               <React.Fragment>
-                <Sidebar user={data.getUserInfo} />
+                <Sidebar
+                  user={data.getUserInfo}
+                  ui={this.props.ui}
+                  uiActions={this.props.uiActions}
+                />
                 <Searchbar user={data.getUserInfo} />
                 <SnippetSection
                   user={data.getUserInfo}

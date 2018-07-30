@@ -31,3 +31,10 @@ export function selectStarred() {
     type: types.SELECT_STARRED
   };
 }
+
+export function selectedCategory(category) {
+  return {
+    type: types.SELECT_CATEGORY,
+    category
+  };
+}

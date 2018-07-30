@@ -17,15 +17,30 @@ class SnippetSection extends Component {
       code,
       notes
     } = this.props.form.snippet.values;
+    let category = this.this.props.ui.currentCategory;
     if (!snippetName) {
       this.props.uiActions.setError("no snippet name specified");
+      return;
+    }
+    if (category === "ALL") {
+      this.props.uiActions.setError(
+        "select a category for saving your snippet"
+      );
       return;
     }
     this.props.uiActions.clearError();
     this.props.client
       .mutate({
         mutation: SAVE_SNIPPET,
-        variables: { snippetName, tags, description, language, code, notes }
+        variables: {
+          snippetName,
+          category,
+          tags,
+          description,
+          language,
+          code,
+          notes
+        }
       })
       .then(res => {
         let user = this.props.client.readQuery({

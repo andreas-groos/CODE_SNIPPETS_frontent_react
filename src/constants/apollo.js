@@ -34,6 +34,7 @@ export const GET_USER_INFO = gql`
     getUserInfo {
       displayName
       uid
+      categories
       snippets {
         snippetName
         tags
@@ -50,6 +51,7 @@ export const GET_USER_INFO = gql`
 export const SAVE_SNIPPET = gql`
   mutation saveSnippet(
     $snippetName: String
+    $category: String
     $tags: String
     $description: String
     $language: String
@@ -58,6 +60,7 @@ export const SAVE_SNIPPET = gql`
   ) {
     saveSnippet(
       snippetName: $snippetName
+      category: $category
       tags: $tags
       description: $description
       language: $language
@@ -65,12 +68,21 @@ export const SAVE_SNIPPET = gql`
       notes: $notes
     ) {
       snippetName
+      category
       tags
       description
       code
       notes
       _id
       language
+    }
+  }
+`;
+
+export const ADD_CATEGORY = gql`
+  mutation addCategory($categoryName: String) {
+    addCategory(categoryName: $categoryName) {
+      categories
     }
   }
 `;
