@@ -1,0 +1,22 @@
+.bordered {
+  border-top: 1px lightcoral solid;
+  border-right: 1px lightcoral solid;
+}
+
+.light-bordered {
+  border: 1px rgba(0,0,0,0.2) solid;
+  > div {
+    padding: 5px;
+  }
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.tag-box {
+  margin: 5px 5px 5px 0;
+  > span {
+    border: 1px rgba(0,0,0,0.3) solid;
+    border-radius: 10px;
+    padding: 3px 6px;
+  }
+}

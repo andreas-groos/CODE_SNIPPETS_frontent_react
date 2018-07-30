@@ -17,3 +17,16 @@
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
+
+.snippet-categories {
+  color: limegreen;
+  > div {
+    display:flex;
+    justify-content: space-between;
+    > p {
+      font-size: 14px;
+    }
+  }
+  border-bottom: 1px limegreen solid;
+  margin-bottom: 10px;; 
+}

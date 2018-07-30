@@ -6,6 +6,7 @@ import { Query } from "react-apollo";
 import { GET_USER_INFO } from "../constants/apollo";
 
 import Sidebar from "./Sidebar";
+import Searchbar from "./Searchbar";
 import SnippetSection from "./SnippetSection";
 
 import { connect } from "react-redux";
@@ -24,7 +25,6 @@ class HomePage extends Component {
         {/* skip={!token}: only fetch when token is present */}
         <Query query={GET_USER_INFO} skip={!token}>
           {({ loading, error, data }) => {
-            console.log("data", data);
             if (!data && loading) {
               // Shows only on first time while there is no 'data'
               return <h1>Loading</h1>;
@@ -32,6 +32,7 @@ class HomePage extends Component {
             return (
               <React.Fragment>
                 <Sidebar user={data.getUserInfo} />
+                <Searchbar user={data.getUserInfo} />
                 <SnippetSection
                   user={data.getUserInfo}
                   form={this.props.form}

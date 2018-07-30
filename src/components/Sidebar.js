@@ -5,9 +5,21 @@ import { Col, Tabs, Tab } from "reactstrap";
 
 export default class Sidebar extends Component {
   render() {
+    let snippets = (this.props.user && this.props.user.snippets) || [];
+    let snippetCount = snippets.length;
+    let starredCount = snippets.filter(s => s.starred).length;
     return (
-      <Col xs="3" className="text-light bg-dark py-3 sidebar sidebar-sticky">
-        <p>Sidebar</p>
+      <Col xs="2" className="text-light bg-dark py-3 sidebar sidebar-sticky">
+        <div className="snippet-categories">
+          <div>
+            <p>All Snippets</p>
+            <p>{snippetCount}</p>
+          </div>
+          <div>
+            <p>Starred</p>
+            <p>{starredCount}</p>
+          </div>
+        </div>
         {this.props.user &&
           this.props.user.snippets &&
           this.props.user.snippets.map(s => {
