@@ -3,7 +3,8 @@
   top: 0;
   bottom: 0;
   left: 0;
-  z-index: 100; /* Behind the navbar */
+  z-index: 100;
+  /* Behind the navbar */
   padding: 0;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
@@ -11,23 +12,33 @@
 .sidebar-sticky {
   position: -webkit-sticky;
   position: sticky;
-  top: 48px; /* Height of navbar */
+  top: 48px;
+  /* Height of navbar */
   height: calc(100vh - 56px);
   padding: .5rem;
   overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  overflow-y: auto;
+  /* Scrollable contents if viewport is shorter than content. */
 }
 
 .snippet-categories {
   color: limegreen;
-  > div {
-    display:flex;
-    justify-content: space-between;
-    cursor: pointer; 
-    > p {
-      font-size: 14px;
+  border-bottom: 2px limegreen solid;
+  >div {
+    padding: 5px 7px;
+    margin-bottom: 5px;
+    >div {
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+      > p {
+        margin-bottom: 0px;
+      }
     }
   }
-  border-bottom: 1px limegreen solid;
-  margin-bottom: 10px;; 
+}
+
+div.selected-category {
+  border: 1px limegreen solid;
+  border-radius: 5px;
 }

@@ -15,20 +15,34 @@ class Sidebar extends Component {
     return (
       <Col xs="2" className="text-light bg-dark py-3 sidebar sidebar-sticky">
         <div className="snippet-categories">
-          <div onClick={this.props.uiActions.selectAll}>
-            <p>All Snippets</p>
-            <p>{snippetCount}</p>
+          <div
+            onClick={this.props.uiActions.selectAll}
+            className={
+              this.props.ui.selection === "ALL" ? "selected-category" : null
+            }
+          >
+            <div>
+              <p>All Snippets</p>
+              <p>{snippetCount}</p>
+            </div>
           </div>
-          <div onClick={this.props.uiActions.selectStarred}>
-            <p>Starred</p>
-            <p>{starredCount}</p>
+          <div
+            onClick={this.props.uiActions.selectStarred}
+            className={
+              this.props.ui.selection === "STARRED" ? "selected-category" : null
+            }
+          >
+            <div>
+              <p>Starred</p>
+              <p>{starredCount}</p>
+            </div>
           </div>
         </div>
-        {this.props.user &&
+        {/* {this.props.user &&
           this.props.user.snippets &&
           this.props.user.snippets.map(s => {
             return <p key={s._id}>{s.snippetName}</p>;
-          })}
+          })} */}
       </Col>
     );
   }
