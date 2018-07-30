@@ -5,6 +5,7 @@ export default {
   },
   ui: {
     error: null,
-    selection: "ALL"
+    selection: "ALL",
+    category: "ALL"
   }
 };

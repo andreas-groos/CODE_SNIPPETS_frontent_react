@@ -31,10 +31,10 @@
       display: flex;
       justify-content: space-between;
       cursor: pointer;
-      // &:hover {
-      //   background: rgba(50, 205, 50, 0.3)
-      // }
-      >p {
+            & hover {
+              color: red;
+            }
+      > p {
         margin-bottom: 0px;
       }
     }
@@ -43,18 +43,5 @@
 
 div.selected-category {
   border: 1px limegreen solid;
-}
-
-.category {
-  padding: 5px;
-  > p {
-    margin: 0 8px;;
-  }
-  &:hover {
-    background: rgba(50, 205, 50, 0.3)
-  }
-}
-
-.remove-gutters {
-  margin: 8px -8px;
+  border-radius: 5px;
 }
