@@ -87,3 +87,18 @@ export const ADD_CATEGORY = gql`
     }
   }
 `;
+
+export const DELETE_SNIPPET = gql`
+  mutation deleteSnippet($_id: String) {
+    deleteSnippet(_id: $_id) {
+      snippetName
+      category
+      tags
+      description
+      code
+      notes
+      _id
+      language
+    }
+  }
+`;

@@ -97,7 +97,10 @@ class SnippetSection extends Component {
             }
           />
         ) : (
-          <SnippetDisplay selectedSnippet={selectedSnippet} />
+          <SnippetDisplay
+            selectedSnippet={selectedSnippet}
+            uiActions={this.props.uiActions}
+          />
         )}
       </Col>
     );
