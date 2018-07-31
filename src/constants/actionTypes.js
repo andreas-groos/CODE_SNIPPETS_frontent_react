@@ -10,5 +10,6 @@ export const CLEAR_ERROR = "CLEAR_ERROR";
 export const SELECT_ALL = "SELECT_ALL";
 export const SELECT_STARRED = "SELECT_STARRED";
 export const SELECT_CATEGORY = "SELECT_CATEGORY";
+export const SELECT_SNIPPET = "SELECT_SNIPPET";
 
 export const SAVE_SNIPPET = "SAVE_SNIPPET";

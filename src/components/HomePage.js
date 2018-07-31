@@ -36,7 +36,11 @@ class HomePage extends Component {
                   ui={this.props.ui}
                   uiActions={this.props.uiActions}
                 />
-                <Searchbar user={data.getUserInfo} ui={this.props.ui} />
+                <Searchbar
+                  user={data.getUserInfo}
+                  ui={this.props.ui}
+                  uiActions={this.props.uiActions}
+                />
                 <SnippetSection
                   user={data.getUserInfo}
                   form={this.props.form}

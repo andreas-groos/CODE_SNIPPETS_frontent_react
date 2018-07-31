@@ -82,6 +82,13 @@ class Sidebar extends Component {
           </div>
         </div>
         <br />
+        <div
+          className="snippet-selection-categories"
+          onClick={() => this.props.uiActions.showEditor(true)}
+        >
+          <p className="">NEW SNIPPET +</p>
+        </div>
+        <br />
         <div>
           <div className="d-flex justify-content-between">
             <p>My Categories</p>
