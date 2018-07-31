@@ -21,7 +21,7 @@
   /* Scrollable contents if viewport is shorter than content. */
 }
 
-.snippet-categories {
+.snippet-selection-categories {
   color: limegreen;
   border-bottom: 2px limegreen solid;
   >div {
@@ -41,7 +41,7 @@
   }
 }
 
-div.selected-category {
+div.selected-selection {
   border: 1px limegreen solid;
 }
 
@@ -53,6 +53,11 @@ div.selected-category {
   &:hover {
     background: rgba(50, 205, 50, 0.3)
   }
+}
+
+.selected-category {
+  color:limegreen;
+  font-weight: bold;
 }
 
 .remove-gutters {

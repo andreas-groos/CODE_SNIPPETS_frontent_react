@@ -26,10 +26,18 @@ export default class Searchbar extends Component {
   render() {
     let snippets = this.props && this.props.user && this.props.user.snippets;
     if (!snippets) return null;
+    // reduce by SearchTerm
     let reducedSnippets = snippets.filter(s => {
       let reg = new RegExp(this.state.searchTerm, "i");
       return reg.test(s.snippetName);
     });
+    // reduce by category
+    if (this.props.ui.category !== "ALL") {
+      reducedSnippets = reducedSnippets.filter(s => {
+        return s.category === this.props.ui.category;
+      });
+    }
+
     return (
       <Col xs="3" className="bg-light py-3 sidebar sidebar-sticky bordered">
         <Row>

@@ -17,7 +17,7 @@ class SnippetSection extends Component {
       code,
       notes
     } = this.props.form.snippet.values;
-    let category = this.this.props.ui.currentCategory;
+    let category = this.props.ui.category;
     if (!snippetName) {
       this.props.uiActions.setError("no snippet name specified");
       return;
