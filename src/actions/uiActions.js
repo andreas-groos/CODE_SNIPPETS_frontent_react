@@ -32,7 +32,7 @@ export function selectStarred() {
   };
 }
 
-export function selectedCategory(category) {
+export function selectCategory(category) {
   return {
     type: types.SELECT_CATEGORY,
     category

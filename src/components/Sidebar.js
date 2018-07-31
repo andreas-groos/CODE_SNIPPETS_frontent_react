@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 // import { bindActionCreators } from "redux";
 // import * as uiActions from "../actions/uiActions";
 import { withApollo } from "react-apollo";
+import { ADD_CATEGORY, GET_USER_INFO } from "../constants/apollo";
 
 import { Col, Tabs, Tab } from "reactstrap";
 
@@ -12,13 +13,37 @@ class Sidebar extends Component {
   state = {
     showCategoryInput: false
   };
-  input = React.createRef();
+  // input = React.createRef();
 
   handleSubmit = e => {
     e.preventDefault();
-    let value = this.input.current.value;
-    // TODO: insert backend upload
-    this.setState({ showCategoryInput: false });
+    let value = this.input.value;
+    this.props.client
+      .mutate({
+        mutation: ADD_CATEGORY,
+        variables: {
+          categoryName: value
+        }
+      })
+      .then(res => {
+        let { categories } = res.data.addCategory;
+        let user = this.props.client.readQuery({
+          query: GET_USER_INFO
+        });
+        this.props.client.writeQuery({
+          query: GET_USER_INFO,
+          data: {
+            getUserInfo: {
+              ...user.getUserInfo,
+              categories
+            }
+          }
+        });
+        this.setState({ showCategoryInput: false });
+      })
+      .catch(err => {
+        this.props.uiActions.setError("Category could not be added");
+      });
   };
 
   render() {
@@ -59,6 +84,7 @@ class Sidebar extends Component {
             <h4
               onClick={() => {
                 this.setState({ showCategoryInput: true });
+                // TODO: needs to focus input
               }}
             >
               +
@@ -69,15 +95,27 @@ class Sidebar extends Component {
               Create some categories and then create some snippets
             </p>
           ) : (
-            <div>
-              {categories.map(c => {
-                return <p>{c}</p>;
+            <div className="remove-gutters">
+              {categories.map((c, i) => {
+                return (
+                  <div className="category" key={i}>
+                    <p onClick={() => this.props.uiActions.selectCategory(c)}>
+                      {c}
+                    </p>
+                  </div>
+                );
               })}
             </div>
           )}
           {this.state.showCategoryInput ? (
             <form onSubmit={this.handleSubmit}>
-              <input className="form-control" type="text" ref={this.input} />
+              <input
+                className="form-control"
+                type="text"
+                ref={input => {
+                  this.input = input;
+                }}
+              />
             </form>
           ) : null}
         </div>
@@ -89,7 +127,8 @@ class Sidebar extends Component {
 Sidebar.propTypes = {
   user: PropTypes.object,
   ui: PropTypes.object,
-  uiActions: PropTypes.object
+  uiActions: PropTypes.object,
+  client: PropTypes.object
 };
 
 export default withApollo(Sidebar);
