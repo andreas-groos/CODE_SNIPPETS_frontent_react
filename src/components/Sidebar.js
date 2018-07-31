@@ -17,6 +17,7 @@ class Sidebar extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    this.props.uiActions.clearError();
     let value = this.input.value;
     this.props.client
       .mutate({
@@ -40,6 +41,7 @@ class Sidebar extends Component {
           }
         });
         this.setState({ showCategoryInput: false });
+        this.props.uiActions.selectCategory(value);
       })
       .catch(err => {
         this.props.uiActions.setError("Category could not be added");
@@ -53,11 +55,11 @@ class Sidebar extends Component {
     let categories = (this.props.user && this.props.user.categories) || [];
     return (
       <Col xs="2" className="text-light bg-dark py-3 sidebar sidebar-sticky">
-        <div className="snippet-categories">
+        <div className="snippet-selection-categories">
           <div
             onClick={this.props.uiActions.selectAll}
             className={
-              this.props.ui.selection === "ALL" ? "selected-category" : null
+              this.props.ui.selection === "ALL" ? "selected-selection" : null
             }
           >
             <div>
@@ -68,7 +70,9 @@ class Sidebar extends Component {
           <div
             onClick={this.props.uiActions.selectStarred}
             className={
-              this.props.ui.selection === "STARRED" ? "selected-category" : null
+              this.props.ui.selection === "STARRED"
+                ? "selected-selection"
+                : null
             }
           >
             <div>
@@ -96,9 +100,27 @@ class Sidebar extends Component {
             </p>
           ) : (
             <div className="remove-gutters">
+              <div
+                className={
+                  this.props.ui.category === "ALL"
+                    ? "selected-category category"
+                    : "category"
+                }
+              >
+                <p onClick={() => this.props.uiActions.selectCategory("ALL")}>
+                  ALL
+                </p>
+              </div>
               {categories.map((c, i) => {
                 return (
-                  <div className="category" key={i}>
+                  <div
+                    className={
+                      this.props.ui.category === c
+                        ? "selected-category category"
+                        : "category"
+                    }
+                    key={i}
+                  >
                     <p onClick={() => this.props.uiActions.selectCategory(c)}>
                       {c}
                     </p>
