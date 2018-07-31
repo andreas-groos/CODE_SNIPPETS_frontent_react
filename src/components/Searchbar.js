@@ -66,7 +66,9 @@ export default class Searchbar extends Component {
               reducedSnippets.map(s => {
                 return (
                   <div key={s._id} className="light-bordered">
-                    <div>
+                    <div
+                      onClick={() => this.props.uiActions.selectSnippet(s._id)}
+                    >
                       <p className="my-0">{s.snippetName}</p>
                       {s.tags ? (
                         this.tags(s.tags)
@@ -90,5 +92,6 @@ export default class Searchbar extends Component {
 }
 
 Searchbar.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  uiActions: PropTypes.object
 };

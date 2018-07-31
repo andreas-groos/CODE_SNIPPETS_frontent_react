@@ -3,7 +3,9 @@ import {
   CLEAR_ERROR,
   SELECT_ALL,
   SELECT_STARRED,
-  SELECT_CATEGORY
+  SELECT_CATEGORY,
+  SELECT_SNIPPET,
+  SHOW_EDITOR
 } from "../constants/actionTypes.js";
 import initialState from "./initialState.js";
 
@@ -19,6 +21,10 @@ export default function uiReducer(state = initialState.ui, action) {
       return { ...state, selection: "STARRED" };
     case SELECT_CATEGORY:
       return { ...state, category: action.category };
+    case SELECT_SNIPPET:
+      return { ...state, selectedSnippet: action._id };
+    case SHOW_EDITOR:
+      return { ...state, showEditor: action.show };
     default:
       return state;
   }

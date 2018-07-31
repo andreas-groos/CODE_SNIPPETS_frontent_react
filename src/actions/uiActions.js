@@ -38,3 +38,10 @@ export function selectCategory(category) {
     category
   };
 }
+
+export function selectSnippet(_id) {
+  return {
+    type: types.SELECT_SNIPPET,
+    _id
+  };
+}
