@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/styles/hljs";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { Button } from "reactstrap";
 
 import { withApollo } from "react-apollo";
 import { DELETE_SNIPPET, GET_USER_INFO } from "../constants/apollo";
@@ -68,6 +70,15 @@ class SnippetDisplay extends Component {
           // <p className="small text-muted my-0">{s.tags}</p>
           <p className="small text-muted my-0">no tags</p>
         )}
+        <br />
+        <CopyToClipboard
+          text={selectedSnippet.code}
+          onCopy={() => this.setState({ copied: true })}
+        >
+          <Button outline color="primary" size="lg" block>
+            Copy snippet
+          </Button>
+        </CopyToClipboard>
         <hr />
         <h5>{selectedSnippet.description}</h5>
         <h6 className="text-monospace">{selectedSnippet.language}</h6>
