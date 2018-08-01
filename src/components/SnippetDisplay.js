@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/styles/hljs";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { Button } from "reactstrap";
+import { Button, Col, Row } from "reactstrap";
 
 import { withApollo } from "react-apollo";
 import { DELETE_SNIPPET, GET_USER_INFO } from "../constants/apollo";
@@ -12,18 +12,24 @@ class SnippetDisplay extends Component {
   static propTypes = {
     selectedSnippet: PropTypes.object,
     client: PropTypes.object,
-    uiActions: PropTypes.object
+    uiActions: PropTypes.object,
+    formActions: PropTypes.object
   };
   tags = str => {
     return (
       <div>
-        {str.split(",").map((t, i) => (
+        {str.map((t, i) => (
           <span key={i} className="tag-box">
             <span>{t}</span>
           </span>
         ))}
       </div>
     );
+  };
+
+  handleEdit = () => {
+    this.props.formActions.setAllFormValues(this.props.selectedSnippet);
+    this.props.uiActions.showEditor(true);
   };
 
   handleDelete = () => {
@@ -88,9 +94,19 @@ class SnippetDisplay extends Component {
             {selectedSnippet.code}
           </SyntaxHighlighter>
         ) : null}
-        <button className="btn btn-warning" onClick={this.handleDelete}>
-          Delete this snippet
-        </button>
+        <hr />
+        <Row>
+          <Col>
+            <Button block color="warning" onClick={this.handleDelete}>
+              Delete this snippet
+            </Button>
+          </Col>
+          <Col>
+            <Button block color="primary" onClick={this.handleEdit}>
+              Edit snippet
+            </Button>
+          </Col>
+        </Row>
       </div>
     );
   }

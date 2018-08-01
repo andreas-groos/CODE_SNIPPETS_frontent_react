@@ -6,8 +6,7 @@ import userReducer from "./userReducer";
 import testReducer from "./testReducer";
 import snippetReducer from "./snippetReducer";
 import uiReducer from "./uiReducer";
-
-import { reducer as formReducer } from "redux-form";
+import formReducer from "./formReducer";
 
 export default combineReducers({
   user: userReducer,

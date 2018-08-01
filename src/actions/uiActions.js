@@ -45,3 +45,9 @@ export function selectSnippet(_id) {
     _id
   };
 }
+
+export function resetSelectSnippet(_id) {
+  return {
+    type: types.RESET_SELECT_SNIPPET
+  };
+}

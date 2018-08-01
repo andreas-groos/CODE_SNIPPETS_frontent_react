@@ -9,5 +9,6 @@ export default {
     category: "ALL",
     selectedSnippet: null,
     showEditor: false
-  }
+  },
+  form: {}
 };

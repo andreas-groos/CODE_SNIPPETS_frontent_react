@@ -53,7 +53,7 @@ export const SAVE_SNIPPET = gql`
   mutation saveSnippet(
     $snippetName: String
     $category: String
-    $tags: String
+    $tags: [String]
     $description: String
     $language: String
     $code: String

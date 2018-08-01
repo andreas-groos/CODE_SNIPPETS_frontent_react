@@ -11,7 +11,7 @@ export default class Searchbar extends Component {
   tags = str => {
     return (
       <div>
-        {str.split(",").map((t, i) => (
+        {str.map((t, i) => (
           <span key={i} className="tag-box">
             <span>{t}</span>
           </span>
@@ -67,7 +67,10 @@ export default class Searchbar extends Component {
                 return (
                   <div key={s._id} className="light-bordered">
                     <div
-                      onClick={() => this.props.uiActions.selectSnippet(s._id)}
+                      onClick={() => {
+                        this.props.uiActions.showEditor(false);
+                        this.props.uiActions.selectSnippet(s._id);
+                      }}
                     >
                       <p className="my-0">{s.snippetName}</p>
                       {s.tags ? (

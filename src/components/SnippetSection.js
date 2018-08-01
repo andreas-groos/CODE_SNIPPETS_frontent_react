@@ -14,18 +14,24 @@ class SnippetSection extends Component {
     e.preventDefault();
     let {
       snippetName,
+      category,
       tags,
       description,
       language,
       code,
       notes
-    } = this.props.form.snippet.values;
-    let category = this.props.ui.category;
+    } = this.props.form;
+    // If snippet is being edited it already has category
+    // otherwise use uiCatogory from sidebar
+    let uiCategory = this.props.ui.category;
+    if (!category && uiCategory !== "ALL") {
+      category = uiCategory;
+    }
     if (!snippetName) {
       this.props.uiActions.setError("no snippet name specified");
       return;
     }
-    if (category === "ALL") {
+    if (!category && uiCategory === "ALL") {
       this.props.uiActions.setError(
         "select a category for saving your snippet"
       );
@@ -62,25 +68,19 @@ class SnippetSection extends Component {
         let { _id } = res.data.saveSnippet;
         console.log("_id", _id);
         this.props.uiActions.selectSnippet(_id);
+        this.props.formActions.clearForm();
+        this.setState({});
       })
       .catch(err => {
         this.props.uiActions.setError("Error in submitting snippet");
       });
   };
   render() {
-    let code =
-      (this.props.form.snippet &&
-        this.props.form.snippet.values &&
-        this.props.form.snippet.values.code) ||
-      null;
     let snippets = (this.props.user && this.props.user.snippets) || null;
     let selectedSnippet =
       snippets && this.props.ui.selectedSnippet
         ? find(snippets, o => o._id === this.props.ui.selectedSnippet)
         : null;
-    console.log("selectedSnippet", selectedSnippet);
-    console.log("snippets", snippets);
-    console.log("this.props.ui.selectedSnippet", this.props.ui.selectedSnippet);
     return (
       <Col className=" py-3 sidebar sidebar-sticky">
         {this.props.ui.error ? (
@@ -89,17 +89,14 @@ class SnippetSection extends Component {
         {this.props.ui.showEditor ? (
           <SnippetForm
             handleSubmit={this.handleSubmit}
-            code={code}
-            values={
-              this.props.form &&
-              this.props.form.snippet &&
-              this.props.form.snippet.values
-            }
+            values={selectedSnippet}
+            formActions={this.props.formActions}
           />
         ) : (
           <SnippetDisplay
             selectedSnippet={selectedSnippet}
             uiActions={this.props.uiActions}
+            formActions={this.props.formActions}
           />
         )}
       </Col>
@@ -108,11 +105,12 @@ class SnippetSection extends Component {
 }
 
 SnippetSection.propTypes = {
-  form: PropTypes.object,
   client: PropTypes.object,
   ui: PropTypes.object,
   uiActions: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
+  formActions: PropTypes.object,
+  form: PropTypes.object
 };
 
 export default withApollo(SnippetSection);

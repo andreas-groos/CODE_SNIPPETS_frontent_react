@@ -15,7 +15,7 @@ class Sidebar extends Component {
   };
   // input = React.createRef();
 
-  handleSubmit = e => {
+  handleAddCategory = e => {
     e.preventDefault();
     this.props.uiActions.clearError();
     let value = this.input.value;
@@ -84,7 +84,10 @@ class Sidebar extends Component {
         <br />
         <div
           className="snippet-selection-categories"
-          onClick={() => this.props.uiActions.showEditor(true)}
+          onClick={() => {
+            this.props.uiActions.resetSelectSnippet();
+            this.props.uiActions.showEditor(true);
+          }}
         >
           <p className="">NEW SNIPPET +</p>
         </div>
@@ -137,7 +140,7 @@ class Sidebar extends Component {
             </div>
           )}
           {this.state.showCategoryInput ? (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleAddCategory}>
               <input
                 className="form-control"
                 type="text"
@@ -157,6 +160,7 @@ Sidebar.propTypes = {
   user: PropTypes.object,
   ui: PropTypes.object,
   uiActions: PropTypes.object,
+  formActions: PropTypes.object,
   client: PropTypes.object
 };
 

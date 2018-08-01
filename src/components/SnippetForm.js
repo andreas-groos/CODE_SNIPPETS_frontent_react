@@ -1,104 +1,114 @@
-import React from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+
 import { Field, reduxForm } from "redux-form";
 
-import { Row, Col } from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { docco } from "react-syntax-highlighter/styles/hljs";
+// import SyntaxHighlighter from "react-syntax-highlighter";
+// import { docco } from "react-syntax-highlighter/styles/hljs";
 
-const SnippetForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props;
-  let codeStr = props.code || "";
-  return (
-    <form onSubmit={handleSubmit}>
-      <div className="my-2">
-        <Field
-          className="form-control"
-          name="snippetName"
-          component="input"
-          type="text"
-          placeholder="Snippet Name"
-        />
-      </div>
-      <div className="my-2">
-        <div>
-          <Field
+import CodeMirror from "react-codemirror";
+require("codemirror/lib/codemirror.css");
+require("codemirror/mode/javascript/javascript");
+
+import TagsInput from "react-tagsinput";
+class SnippetForm extends Component {
+  state = {
+    snippetName: "",
+    tags: [],
+    description: "",
+    language: "",
+    code: "",
+    notes: ""
+  };
+
+  componentDidMount = () => {
+    this.setState({ ...this.props.values });
+  };
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+    this.props.formActions.updateFormValues(e.target.name, e.target.value);
+  };
+
+  handleTagChange = e => {
+    this.setState({ tags: e });
+    this.props.formActions.updateFormValues("tags", e);
+  };
+
+  handleCodeChange = code => {
+    this.props.formActions.updateFormValues("code", code);
+    this.setState({ code });
+  };
+
+  render() {
+    return (
+      <form onSubmit={this.props.handleSubmit}>
+        <div className="my-2">
+          <input
             className="form-control"
-            name="tags"
-            component="input"
+            name="snippetName"
             type="text"
-            placeholder="Tags, seperated by commas"
+            placeholder="Snippet Name"
+            value={this.state.snippetName}
+            onChange={this.handleChange}
           />
         </div>
-      </div>
-      <div className="my-2">
         <div>
-          <Field
-            className="form-control"
-            name="description"
-            component="input"
-            type="text"
-            placeholder="Additional description"
-          />
+          <TagsInput value={this.state.tags} onChange={this.handleTagChange} />
         </div>
-      </div>
-      <div>
-        <label>Language</label>
-        <div>
-          <Field name="language" className="form-control" component="select">
-            <option />
-            <option value="javascript">JavaScript</option>
-            <option value="bash">Bash</option>
-            <option value="html">HTML</option>
-            <option value="css">CSS</option>
-          </Field>
-        </div>
-      </div>
-      <label>Snippet</label>
-      <Row>
-        <Col>
+        <div className="my-2">
           <div>
-            <Field
+            <input
               className="form-control"
-              name="code"
-              component="textarea"
-              rows="10"
+              name="description"
+              type="text"
+              placeholder="description"
+              value={this.state.description}
+              onChange={this.handleChange}
             />
           </div>
-        </Col>
-        <Col>
-          {codeStr.length > 0 && (
-            <SyntaxHighlighter style={docco}>{codeStr}</SyntaxHighlighter>
-          )}
-        </Col>
-      </Row>
-      <div>
-        <label>Notes</label>
-        <div>
-          <Field className="form-control" name="notes" component="textarea" />
         </div>
-      </div>
-      <div className="mt-3">
-        <button
-          className="btn btn-primary"
-          type="submit"
-          disabled={pristine || submitting}
-        >
-          Submit
-        </button>
-        <button
-          className="btn btn-warning"
-          type="button"
-          disabled={pristine || submitting}
-          onClick={reset}
-        >
-          Clear Values
-        </button>
-      </div>
-    </form>
-  );
-};
+        <div className="my-2 border">
+          <div>
+            <CodeMirror
+              value={this.state.code}
+              onChange={this.handleCodeChange}
+              options={{ mode: "javascript" }}
+            />
+          </div>
+        </div>
+        <hr />
+        <div>
+          <div>
+            <textarea
+              className="form-control"
+              name="notes"
+              rows="4"
+              placeholder="additional notes"
+              onChange={this.handleChange}
+            />
+          </div>
+        </div>
+        <div className="mt-3">
+          <Button
+            color="primary"
+            block
+            type="submit"
+            // disabled={pristine || submitting}
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    );
+  }
+}
 
-export default reduxForm({
-  form: "snippet" // a unique identifier for this form
-})(SnippetForm);
+SnippetForm.propTypes = {
+  formActions: PropTypes.object,
+  handleSubmit: PropTypes.func,
+  values: PropTypes.object
+};
+export default SnippetForm;

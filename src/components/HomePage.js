@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../actions/userActions";
 import * as uiActions from "../actions/uiActions";
+import * as formActions from "../actions/formActions";
 
 class HomePage extends Component {
   render() {
@@ -35,6 +36,7 @@ class HomePage extends Component {
                   user={data.getUserInfo}
                   ui={this.props.ui}
                   uiActions={this.props.uiActions}
+                  formActions={this.props.formActions}
                 />
                 <Searchbar
                   user={data.getUserInfo}
@@ -46,6 +48,7 @@ class HomePage extends Component {
                   form={this.props.form}
                   ui={this.props.ui}
                   uiActions={this.props.uiActions}
+                  formActions={this.props.formActions}
                 />
               </React.Fragment>
             );
@@ -61,7 +64,8 @@ HomePage.propTypes = {
   form: PropTypes.object,
   ui: PropTypes.object,
   userActions: PropTypes.object,
-  uiActions: PropTypes.object
+  uiActions: PropTypes.object,
+  formActions: PropTypes.object
 };
 
 function mapStateToProps(state) {
@@ -75,7 +79,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     userActions: bindActionCreators(userActions, dispatch),
-    uiActions: bindActionCreators(uiActions, dispatch)
+    uiActions: bindActionCreators(uiActions, dispatch),
+    formActions: bindActionCreators(formActions, dispatch)
   };
 }
 
