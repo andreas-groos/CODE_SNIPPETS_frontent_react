@@ -8,6 +8,7 @@ import SnippetForm from "./SnippetForm";
 import SnippetDisplay from "./SnippetDisplay";
 
 import find from "lodash/find";
+import findIndex from "lodash/findIndex";
 
 class SnippetSection extends Component {
   handleSubmit = e => {
@@ -37,12 +38,20 @@ class SnippetSection extends Component {
       );
       return;
     }
+    let _id = null;
+    // for new snippets set null, if selectedSnippet exists (means a snippet is selected) use that _id
+    // backend will check for null (generate new _id) or use existing _id
+    // then in mutate().then(...) if I can if returned _id already exists....
+    if (this.props.ui.selectedSnippet) {
+      _id = this.props.ui.selectedSnippet;
+    }
     this.props.uiActions.clearError();
     this.props.client
       .mutate({
         mutation: SAVE_SNIPPET,
         variables: {
           snippetName,
+          _id,
           category,
           tags,
           description,
@@ -55,15 +64,35 @@ class SnippetSection extends Component {
         let user = this.props.client.readQuery({
           query: GET_USER_INFO
         });
-        this.props.client.writeQuery({
-          query: GET_USER_INFO,
-          data: {
-            getUserInfo: {
-              ...user.getUserInfo,
-              snippets: [...user.getUserInfo.snippets, res.data.saveSnippet]
+        let returnedSnippet = res.data.saveSnippet;
+        // Try and see if the returned Snippet already exists (by id check)
+        let index = findIndex(
+          user.getUserInfo.snippets,
+          o => o._id === returnedSnippet._id
+        );
+        if (index === -1) {
+          this.props.client.writeQuery({
+            query: GET_USER_INFO,
+            data: {
+              getUserInfo: {
+                ...user.getUserInfo,
+                snippets: [...user.getUserInfo.snippets, res.data.saveSnippet]
+              }
             }
-          }
-        });
+          });
+        } else {
+          let clonedSnippets = [...user.getUserInfo.snippets];
+          clonedSnippets[index] = returnedSnippet;
+          this.props.client.writeQuery({
+            query: GET_USER_INFO,
+            data: {
+              getUserInfo: {
+                ...user.getUserInfo,
+                snippets: clonedSnippets
+              }
+            }
+          });
+        }
         this.props.uiActions.showEditor(false);
         let { _id } = res.data.saveSnippet;
         console.log("_id", _id);

@@ -52,6 +52,7 @@ export const GET_USER_INFO = gql`
 export const SAVE_SNIPPET = gql`
   mutation saveSnippet(
     $snippetName: String
+    $_id: String
     $category: String
     $tags: [String]
     $description: String
@@ -61,6 +62,7 @@ export const SAVE_SNIPPET = gql`
   ) {
     saveSnippet(
       snippetName: $snippetName
+      _id: $_id
       category: $category
       tags: $tags
       description: $description
