@@ -126,6 +126,7 @@ class SnippetSection extends Component {
             selectedSnippet={selectedSnippet}
             uiActions={this.props.uiActions}
             formActions={this.props.formActions}
+            ui={this.props.ui}
           />
         )}
       </Col>

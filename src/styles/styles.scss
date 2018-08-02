@@ -5,13 +5,14 @@
 @import './_sidebar';
 @import './_searchbar';
 @import './_tagsInput';
+@import './_snippets';
 
 html, body {
   height: 100vh;
 }
 
 .error-warning {
-  color: red;
+  color: $danger;
   font-weight: bold;
   text-align: center;
 }

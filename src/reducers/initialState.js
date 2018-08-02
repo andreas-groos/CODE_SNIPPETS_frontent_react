@@ -8,7 +8,8 @@ export default {
     selection: "ALL",
     category: "ALL",
     selectedSnippet: null,
-    showEditor: false
+    showEditor: false,
+    showCopiedInfo: false
   },
   form: {}
 };

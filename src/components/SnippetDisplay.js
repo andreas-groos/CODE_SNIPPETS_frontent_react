@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/styles/hljs";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { Button, Col, Row } from "reactstrap";
+import { Button, Col, Row, Alert } from "reactstrap";
 
 import { withApollo } from "react-apollo";
 import { DELETE_SNIPPET, GET_USER_INFO } from "../constants/apollo";
@@ -13,6 +13,7 @@ class SnippetDisplay extends Component {
     selectedSnippet: PropTypes.object,
     client: PropTypes.object,
     uiActions: PropTypes.object,
+    ui: PropTypes.object,
     formActions: PropTypes.object
   };
   tags = str => {
@@ -55,8 +56,6 @@ class SnippetDisplay extends Component {
             }
           }
         });
-        // this.setState({ showCategoryInput: false });
-        // this.props.uiActions.selectCategory(value);
       })
       .catch(err => {
         console.log("err", err);
@@ -69,6 +68,11 @@ class SnippetDisplay extends Component {
     if (!selectedSnippet) return <img src="../assets/code_logo.jpg" />;
     return (
       <div>
+        {this.props.ui.showCopiedInfo ? (
+          <Alert className="top-right-corner" color="warning">
+            Copied snippet
+          </Alert>
+        ) : null}
         <h1>{selectedSnippet.snippetName}</h1>
         {selectedSnippet.tags ? (
           this.tags(selectedSnippet.tags)
@@ -79,7 +83,10 @@ class SnippetDisplay extends Component {
         <br />
         <CopyToClipboard
           text={selectedSnippet.code}
-          onCopy={() => this.setState({ copied: true })}
+          onCopy={() => {
+            this.setState({ copied: true });
+            this.props.uiActions.copyEvent();
+          }}
         >
           <Button outline color="primary" size="lg" block>
             Copy snippet

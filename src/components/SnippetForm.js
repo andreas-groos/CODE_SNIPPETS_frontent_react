@@ -43,7 +43,7 @@ class SnippetForm extends Component {
   };
 
   render() {
-    console.log("this.state.code", this.state.code);
+    let codeSnippet = (this.props.values && this.props.values.code) || "";
     return (
       <form onSubmit={this.props.handleSubmit}>
         <div className="my-2">
@@ -74,7 +74,7 @@ class SnippetForm extends Component {
         <div className="my-2 border">
           <div>
             <CodeMirror
-              value={this.props.values.code}
+              value={codeSnippet}
               onChange={this.handleCodeChange}
               options={{ mode: "javascript" }}
             />

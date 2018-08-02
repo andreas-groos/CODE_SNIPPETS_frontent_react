@@ -6,7 +6,8 @@ import {
   SELECT_CATEGORY,
   SELECT_SNIPPET,
   RESET_SELECT_SNIPPET,
-  SHOW_EDITOR
+  SHOW_EDITOR,
+  SHOW_COPIED_INFO
 } from "../constants/actionTypes.js";
 import initialState from "./initialState.js";
 
@@ -28,6 +29,8 @@ export default function uiReducer(state = initialState.ui, action) {
       return { ...state, selectedSnippet: null };
     case SHOW_EDITOR:
       return { ...state, showEditor: action.show };
+    case SHOW_COPIED_INFO:
+      return { ...state, showCopiedInfo: action.show };
     default:
       return state;
   }

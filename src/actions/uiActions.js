@@ -51,3 +51,19 @@ export function resetSelectSnippet(_id) {
     type: types.RESET_SELECT_SNIPPET
   };
 }
+
+export function showCopiedInfo(show) {
+  return {
+    type: types.SHOW_COPIED_INFO,
+    show
+  };
+}
+
+export function copyEvent() {
+  return dispatch => {
+    dispatch(showCopiedInfo(true));
+    setTimeout(() => {
+      dispatch(showCopiedInfo(false));
+    }, 2000);
+  };
+}
