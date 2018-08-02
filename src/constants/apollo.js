@@ -5,8 +5,13 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 
 import gql from "graphql-tag";
 
+let uri =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3033/graphql"
+    : "http://178.128.190.35:3033/graphql";
+
 const client = new ApolloClient({
-  uri: "http://localhost:3010/graphql",
+  uri,
   fetchOptions: {
     credentials: "include"
   },
